@@ -1,0 +1,26 @@
+@import "colors";
+
+$nav-height: 3rem;
+
+.Nav-bar {
+    box-sizing: border-box;
+    padding: .5rem;
+    height: $nav-height;
+    background-color: $secondary-backgound-color;
+    position: sticky;
+    top:0;
+    text-align: left;
+    color: white;
+    // line-height: $nav-height;
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+
+    .Song-input {
+        position: absolute;
+        right: 0;
+
+        display: flex;
+        align-items: center;
+    }
+}
