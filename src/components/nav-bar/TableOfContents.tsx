@@ -6,13 +6,20 @@ export default function TableOfContents(props: {
     isVisible: boolean
 }) {
     let formatted = props.songs.map((song, index) => {
-        return (
-            <p onClick={() => {
+        return ({
+            name: song.title,
+            dom: <p onClick={() => {
                 // alert(song.title);
                 scrollTo(song.reference);
                 props.setVisibility(false);
-            }} key={index}>{index + 1 + ": " + song.title}</p>
-        )
+            }} key={index}><span>{index + 1 + ":\t"}</span> {song.title}</p>
+        });
+    });
+
+    formatted.sort((a, b) => (a.name > b.name)? 1 : -1);
+
+    let output = formatted.map((song) =>{
+        return song.dom;
     });
 
     return (
@@ -20,7 +27,7 @@ export default function TableOfContents(props: {
             visibility: props.isVisible?"visible":"collapse"
         }} onClick={() => props.setVisibility(false)}>
             <div>
-                {formatted}
+                {output}
             </div>
             
         </div>

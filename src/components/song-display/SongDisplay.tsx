@@ -29,8 +29,6 @@ export const scrollTo = (ref?: React.RefObject<HTMLSpanElement>) => {
     let elementPos = elementRect - bodyRect;
     let offsetPos = elementPos - offset;
 
-    console.log(bodyRect, elementRect, elementPos, offsetPos);
-
     document.getElementsByClassName("All-songs")[0]?.scrollTo({
         top: offsetPos,
         behavior: "smooth" //either "smooth" (scrolls) or "auto" (jumps)
@@ -70,7 +68,6 @@ export default function SongDisplay(props:{}) {
 
             let num = Number(query);
             num--;
-            console.log(num);
 
             if (num < songs.length) {
                 let song = songs[num];

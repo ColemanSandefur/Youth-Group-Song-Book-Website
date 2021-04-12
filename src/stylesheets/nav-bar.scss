@@ -20,18 +20,22 @@ $nav-height: 3rem;
 
     .Song-input {
         position: absolute;
-        right: 0;
+        right: .5rem;
 
         display: flex;
         align-items: center;
+        border-radius:10px;
     }
 
     .Expand-icon div {
         height: .17em;
         width: 1em;
-        margin-right: .5em;
         background: white;
-        transition: transform .1s ease-in-out;
+        transition: transform .15s cubic-bezier(.68,-0.55,.27,1.55);
+
+        &, &::before, &::after {
+            box-shadow: 1.5px 1.5px 3px black;
+        }
 
         &::before, &::after {
             content: "";
@@ -51,7 +55,18 @@ $nav-height: 3rem;
 
         &.open {
             transform: rotate(90deg);
+            &, &::before, &::after {
+                box-shadow: 1.5px -1.5px 3px black;
+            }
         }
+    }
+
+    .Expand-icon {
+        cursor: pointer;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        margin-right: .5em;
     }
 }
 
@@ -81,6 +96,17 @@ $nav-height: 3rem;
         padding-right: 1rem;
         box-sizing: border-box;
         width: 100vw;
+    }
+
+    div > * {
+        cursor: pointer;
+        color: #ddd;
+    }
+
+    div p span {
+        color: white;
+        font-size: 2rem;
+        text-shadow: 1.5px 1.5px 2px #111;
     }
 }
 
