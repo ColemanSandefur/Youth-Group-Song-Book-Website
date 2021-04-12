@@ -13,3 +13,9 @@
 body {
     background-color: $primary-backgound-color;
 }
+
+.All-songs {
+    margin-top: 3rem;
+    height: calc(100vh - 3rem);
+    overflow-y: scroll;
+}

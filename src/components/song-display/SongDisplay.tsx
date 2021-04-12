@@ -3,11 +3,39 @@ import "../../stylesheets/song-display.scss";
 import Song from "./Song";
 import NavBar from "../nav-bar/NavBar";
 import JSONSongs from "../../songs.json";
+import TableOfContents from "../nav-bar/TableOfContents";
 
 // all the songs that we have
 // object is the HTML object that corresponds to the song
 // reference is the React reference to the DOM object
 let songs: {title: string, lyrics: string[], object?: JSX.Element, reference?: React.RefObject<HTMLSpanElement>}[] = JSONSongs;
+
+export const scrollTo = (ref?: React.RefObject<HTMLSpanElement>) => {
+    if (!ref?.current) {
+        return;
+    }
+
+    let relative = document.getElementsByClassName("All-songs")[0].children[0]
+
+    let offset = 10;
+
+    //add nav-bar's height to the offset if it exists (prevents nav-bar from covering title of song)
+    if (document.getElementsByClassName("Nav-bar").length !== 0) {
+        offset += document.getElementsByClassName("Nav-bar")[0].clientHeight;
+    }
+
+    let bodyRect = relative.getBoundingClientRect().top;
+    let elementRect = ref.current.getBoundingClientRect().top;
+    let elementPos = elementRect - bodyRect;
+    let offsetPos = elementPos - offset;
+
+    console.log(bodyRect, elementRect, elementPos, offsetPos);
+
+    document.getElementsByClassName("All-songs")[0]?.scrollTo({
+        top: offsetPos,
+        behavior: "smooth" //either "smooth" (scrolls) or "auto" (jumps)
+    });
+}
 
 // Will display the songs
 export default function SongDisplay(props:{}) {
@@ -32,29 +60,6 @@ export default function SongDisplay(props:{}) {
         // save refs to a state
         setSongRefs(refs);
     }, []);
-
-    const scrollTo = (ref?: React.RefObject<HTMLSpanElement>) => {
-        if (!ref?.current) {
-            return;
-        }
-
-        let offset = 10;
-
-        //add nav-bar's height to the offset if it exists (prevents nav-bar from covering title of song)
-        if (document.getElementsByClassName("Nav-bar").length !== 0) {
-            offset += document.getElementsByClassName("Nav-bar")[0].clientHeight;
-        }
-
-        let bodyRect = document.body.getBoundingClientRect().top;
-        let elementRect = ref.current.getBoundingClientRect().top;
-        let elementPos = elementRect - bodyRect;
-        let offsetPos = elementPos - offset;
-
-        window.scrollTo({
-            top: offsetPos,
-            behavior: "smooth" //either "smooth" (scrolls) or "auto" (jumps)
-        });
-    }
 
     const searchForElement = (query: string) => {
         //will test if query is a number
@@ -92,8 +97,12 @@ export default function SongDisplay(props:{}) {
 
     return (
         <div>
-            <NavBar search={searchForElement}/>
-            {songObjects}
+            {/* <TableOfContents scrollTo={scrollTo} songs={songs} /> */}
+            <NavBar search={searchForElement} songs={songs}/>
+            <div className="All-songs">
+                <span></span>
+                {songObjects}
+            </div>
         </div>
     );
 }

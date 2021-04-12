@@ -7,7 +7,8 @@ $nav-height: 3rem;
     padding: .5rem;
     height: $nav-height;
     background-color: $secondary-backgound-color;
-    position: sticky;
+    position: fixed;
+    width: 100vw;
     top:0;
     text-align: left;
     color: white;
@@ -15,6 +16,7 @@ $nav-height: 3rem;
     display: flex;
     align-items: center;
     font-size: 1.5rem;
+    z-index: 1;
 
     .Song-input {
         position: absolute;
@@ -22,5 +24,48 @@ $nav-height: 3rem;
 
         display: flex;
         align-items: center;
+    }
+
+    .Expand-icon {
+        height: 100%;
+        width: 1rem;
+        padding-right: 1em;
+        color: white;
+    }
+}
+
+.Table-of-contents {
+    position: absolute;
+    left: 0;
+    top: 0;
+    
+    margin-top: $nav-height;
+    height: calc(100vh - #{$nav-height});
+    
+    z-index: 0;
+    
+    box-sizing: border-box;
+    word-wrap: break-word;
+    width: 100vw;
+    padding: 0;
+    background-color: rgba(0,0,0, .5);
+
+    div {
+        border-top: 2px solid rgba(0,0,0, .3);
+        background-color: $secondary-backgound-color;
+        margin-top: 0;
+        overflow-y: scroll;
+        height: 100%;
+        padding-left: 1rem;
+        box-sizing: border-box;
+        width: 100vw;
+    }
+}
+
+@media (min-width: 600px) {
+    .Table-of-contents {
+        div {
+            width: 20em;
+        }
     }
 }
