@@ -11,7 +11,7 @@ export default function TableOfContents(props: {
                 // alert(song.title);
                 scrollTo(song.reference);
                 props.setVisibility(false);
-            }}>{index + 1 + ": " + song.title}</p>
+            }} key={index}>{index + 1 + ": " + song.title}</p>
         )
     });
 

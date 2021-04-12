@@ -18,7 +18,10 @@ export default function NavBar(props:{
 
     return (
         <div className="Nav-bar">
-            <div className="Expand-icon" onClick={() => setVisibility(!isVisible)}>=</div>
+            {/* Button to show the sidebar */}
+            <span className={"Expand-icon"} onClick={() => setVisibility(!isVisible)}>
+                <div className={isVisible?"open":""} />
+            </span>
             <span>songs</span>
             <span className="Song-input"><input ref={songInputRef} onKeyPress={(event) => {
                 if (event.key === "Enter" && songQuery) {

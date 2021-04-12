@@ -26,11 +26,32 @@ $nav-height: 3rem;
         align-items: center;
     }
 
-    .Expand-icon {
-        height: 100%;
-        width: 1rem;
-        padding-right: 1em;
-        color: white;
+    .Expand-icon div {
+        height: .17em;
+        width: 1em;
+        margin-right: .5em;
+        background: white;
+        transition: transform .1s ease-in-out;
+
+        &::before, &::after {
+            content: "";
+            background-color: white;
+            display: block;
+            height: 100%;
+            position: relative;
+        }
+
+        &::after {
+            top: 100%;
+        }
+
+        &::before {
+            bottom: 200%;
+        }
+
+        &.open {
+            transform: rotate(90deg);
+        }
     }
 }
 
@@ -57,6 +78,7 @@ $nav-height: 3rem;
         overflow-y: scroll;
         height: 100%;
         padding-left: 1rem;
+        padding-right: 1rem;
         box-sizing: border-box;
         width: 100vw;
     }
