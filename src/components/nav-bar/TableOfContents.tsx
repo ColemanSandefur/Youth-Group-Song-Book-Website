@@ -23,7 +23,7 @@ export default function TableOfContents(props: {
     });
 
     return (
-        <div className="Table-of-contents" style={{
+        <div className="Table-of-contents custom-scrollbar" style={{
             visibility: props.isVisible?"visible":"collapse"
         }} onClick={() => props.setVisibility(false)}>
             <div>

@@ -98,15 +98,18 @@ $nav-height: 3rem;
         width: 100vw;
     }
 
+    //the song (including song number)
     div > * {
         cursor: pointer;
         color: #ddd;
     }
 
+    //the song number
     div p span {
         color: white;
         font-size: 2rem;
         text-shadow: 1.5px 1.5px 2px #111;
+        font-weight: 900;
     }
 }
 

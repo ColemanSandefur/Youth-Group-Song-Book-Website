@@ -10,12 +10,6 @@ export default function NavBar(props:{
     let [isVisible, setVisibility] = useState(false);
     let songInputRef = useRef<HTMLInputElement>(null);
 
-    let toc;
-
-    if (isVisible) {
-        toc=<TableOfContents songs={props.songs} setVisibility={setVisibility} isVisible={isVisible}/>
-    }
-
     return (
         <div className="Nav-bar">
             {/* Button to show the sidebar */}

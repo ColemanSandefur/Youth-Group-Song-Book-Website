@@ -3,7 +3,6 @@ import "../../stylesheets/song-display.scss";
 import Song from "./Song";
 import NavBar from "../nav-bar/NavBar";
 import JSONSongs from "../../songs.json";
-import TableOfContents from "../nav-bar/TableOfContents";
 
 // all the songs that we have
 // object is the HTML object that corresponds to the song
@@ -17,12 +16,12 @@ export const scrollTo = (ref?: React.RefObject<HTMLSpanElement>) => {
 
     let relative = document.getElementsByClassName("All-songs")[0].children[0]
 
-    let offset = 10;
+    let offset = 0; //was 10
 
     //add nav-bar's height to the offset if it exists (prevents nav-bar from covering title of song)
-    if (document.getElementsByClassName("Nav-bar").length !== 0) {
-        offset += document.getElementsByClassName("Nav-bar")[0].clientHeight;
-    }
+    // if (document.getElementsByClassName("Nav-bar").length !== 0) {
+    //     offset += document.getElementsByClassName("Nav-bar")[0].clientHeight;
+    // }
 
     let bodyRect = relative.getBoundingClientRect().top;
     let elementRect = ref.current.getBoundingClientRect().top;
@@ -96,8 +95,8 @@ export default function SongDisplay(props:{}) {
         <div>
             {/* <TableOfContents scrollTo={scrollTo} songs={songs} /> */}
             <NavBar search={searchForElement} songs={songs}/>
-            <div className="All-songs">
-                <span></span>
+            <div className="All-songs custom-scrollbar" style={{position: "relative"}}>
+                <span style={{visibility: "collapse", position: "absolute"}}></span>
                 {songObjects}
             </div>
         </div>

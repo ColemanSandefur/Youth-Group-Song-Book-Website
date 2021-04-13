@@ -1,12 +1,19 @@
 @import "colors";
 
+
 .song {
     margin: 3rem;
     background-color: $primary-backgound-color;
     color: white;
 
     h1 {
+        display: inline-block;
         margin: 0;
+        text-shadow: 1.5px 1.5px 2px #111;
+    }
+
+    h1 span {
+        font-weight: 900;
     }
 }
 
@@ -18,4 +25,34 @@ body {
     margin-top: 3rem;
     height: calc(100vh - 3rem);
     overflow-y: scroll;
+    width: 100vw;
+    display:grid;
+    grid-template-columns: 100%;
+    // grid-template-columns: 1fr 1fr;
+
+    &>* {
+        display: inline-block;
+        // max-width: 50%;
+        // flex-basis: 100%;
+        // flex: 1;
+    }
+}
+
+.custom-scrollbar{
+    scrollbar-color: #ddd $primary-backgound-color;
+
+    &::-webkit-scrollbar-tracktrack {
+        background: $primary-backgound-color;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #ddd;
+        border-radius: 50%;
+    }
+}
+
+@media (min-width: 800px) {
+    .All-songs {
+        grid-template-columns: 1fr 1fr;
+    }
 }

@@ -13,7 +13,7 @@ export default function Song(props: {title: string, lyrics: string[], id?: numbe
 
     return (
         <div className="song" ref={props.ref}>
-            <h1>{prefix}{props.title}</h1>
+            <h1><span>{prefix}</span>{props.title}</h1>
             <span>{output}</span>
         </div>
     );
