@@ -24,7 +24,13 @@ $nav-height: 3rem;
 
         display: flex;
         align-items: center;
-        border-radius:10px;
+
+        input {
+            border-radius: .25rem;
+            border: none;
+            box-shadow: 2px 2px 1px #111;
+        }
+        
     }
 
     .Expand-icon div {
@@ -86,6 +92,7 @@ $nav-height: 3rem;
     padding: 0;
     background-color: rgba(0,0,0, .5);
 
+    //the actual sidebar
     div {
         border-top: 2px solid rgba(0,0,0, .3);
         background-color: $secondary-backgound-color;
@@ -98,10 +105,54 @@ $nav-height: 3rem;
         width: 100vw;
     }
 
+    //the section header
+    div > h1 {
+        text-align: center;
+        position: relative;
+        z-index: 0;
+
+        & > span {
+            position: relative;
+            display: inline-block;
+            width: 2ch;
+            text-align: center;
+            
+            &::after {
+                z-index: -1;
+                content: "";
+                display: block;
+                width: 100%;
+                height: 50%;
+                position: absolute;
+                top: 25%;
+                right: -100%;
+                transform: translateX(-50%);
+                padding: 0 1rem;
+                background-color: $secondary-backgound-color;
+            }
+        }
+
+        &::before {
+            z-index: -1;
+            background-color: #ddd;
+            content: "";
+            display: block;
+            width: 100%;
+            height: 50%;
+            position: absolute;
+            top: 25%;
+            right: 0;
+        }
+    }
+
     //the song (including song number)
-    div > * {
+    div > p {
         cursor: pointer;
         color: #ddd;
+
+        &:last-child {
+            margin-bottom: 5rem;
+        }
     }
 
     //the song number

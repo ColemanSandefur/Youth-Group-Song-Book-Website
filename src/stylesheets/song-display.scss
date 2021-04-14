@@ -1,15 +1,19 @@
 @import "colors";
 
+$max-song-width: 30rem;
 
 .song {
-    margin: 3rem;
     background-color: $primary-backgound-color;
     color: white;
+    text-align: left;
+    // max-width: $max-song-width;
+    // min-width: none;
+    display: inline-block;
 
     h1 {
-        display: inline-block;
         margin: 0;
         text-shadow: 1.5px 1.5px 2px #111;
+        font-weight: 600;
     }
 
     h1 span {
@@ -27,14 +31,16 @@ body {
     overflow-y: scroll;
     width: 100vw;
     display:grid;
-    grid-template-columns: 100%;
-    // grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    
 
     &>* {
-        display: inline-block;
-        // max-width: 50%;
-        // flex-basis: 100%;
-        // flex: 1;
+        padding: 3rem;
+        width: 100%;
+        display: block;
+        text-align: left;
+        box-sizing: border-box;
     }
 }
 
@@ -54,5 +60,10 @@ body {
 @media (min-width: 800px) {
     .All-songs {
         grid-template-columns: 1fr 1fr;
+
+        &>* {
+            max-width: $max-song-width;
+            min-width: 0;
+        }
     }
 }
