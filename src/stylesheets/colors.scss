@@ -1,2 +1,40 @@
-$primary-backgound-color: #282c34;
-$secondary-backgound-color: #1f2229;
+//only used for fallbacks
+$primary-background-color: #282c34;
+$secondary-background-color: #1f2229;
+
+@mixin darkMode() {
+    --primary-background-color: #282c34;
+    --secondary-background-color: #1f2229;
+    --primary-font-color: white;
+    --secondary-font-color: #ddd;
+    --highlight-font-color: white;
+    --text-shadow: 1.5px 1.5px 2px #111;
+}
+
+@mixin lightMode() {
+    --primary-background-color: #e4e4e4;
+    --secondary-background-color: #4f4f4f;
+    --primary-font-color: black;
+    --secondary-font-color: #333;
+    --highlight-font-color: #222288;
+    --text-shadow: none;
+}
+
+:root {
+    @include darkMode();
+}
+
+
+
+//if user's system preference is light theme
+@media (prefers-color-scheme: light) {
+    :root {
+        @include lightMode();
+    }
+}
+
+//if user wants to force light theme
+:root[color="light"] {
+    @include lightMode();
+}
+

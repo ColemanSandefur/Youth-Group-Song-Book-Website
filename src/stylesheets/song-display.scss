@@ -3,16 +3,17 @@
 $max-song-width: 30rem;
 
 .song {
-    background-color: $primary-backgound-color;
+    background-color: $primary-background-color;
+    background-color: var(--primary-background-color);
     color: white;
+    color: var(--primary-font-color);
     text-align: left;
-    // max-width: $max-song-width;
-    // min-width: none;
     display: inline-block;
 
     h1 {
         margin: 0;
         text-shadow: 1.5px 1.5px 2px #111;
+        text-shadow: var(--text-shadow);
         font-weight: 600;
     }
 
@@ -22,7 +23,8 @@ $max-song-width: 30rem;
 }
 
 body {
-    background-color: $primary-backgound-color;
+    background-color: $primary-background-color;
+    background-color: var(--primary-background-color);
 }
 
 .All-songs {
@@ -45,14 +47,17 @@ body {
 }
 
 .custom-scrollbar{
-    scrollbar-color: #ddd $primary-backgound-color;
+    scrollbar-color: $secondary-background-color $primary-background-color;
+    scrollbar-color: var(--secondary-background-color) var(--primary-background-color);
 
     &::-webkit-scrollbar-tracktrack {
-        background: $primary-backgound-color;
+        background: $primary-background-color;
+        background: var(--primary-background-color);
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: #ddd;
+        background-color: $secondary-background-color;
+        background-color: var(--secondary-background-color);
         border-radius: 50%;
     }
 }

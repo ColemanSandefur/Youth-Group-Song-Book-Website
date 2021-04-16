@@ -6,12 +6,14 @@ $nav-height: 3rem;
     box-sizing: border-box;
     padding: .5rem;
     height: $nav-height;
-    background-color: $secondary-backgound-color;
+    background-color: $secondary-background-color; //fallback for unsupported values
+    background-color: var(--secondary-background-color);
     position: fixed;
     width: 100vw;
     top:0;
     text-align: left;
     color: white;
+    color: var(--primary-font-color);
     // line-height: $nav-height;
     display: flex;
     align-items: center;
@@ -29,6 +31,7 @@ $nav-height: 3rem;
             border-radius: .25rem;
             border: none;
             box-shadow: 2px 2px 1px #111;
+            box-shadow: var(--text-shadow);
         }
         
     }
@@ -41,6 +44,7 @@ $nav-height: 3rem;
 
         &, &::before, &::after {
             box-shadow: 1.5px 1.5px 3px black;
+            box-shadow: var(--text-shadow);
         }
 
         &::before, &::after {
@@ -63,6 +67,7 @@ $nav-height: 3rem;
             transform: rotate(90deg);
             &, &::before, &::after {
                 box-shadow: 1.5px -1.5px 3px black;
+                box-shadow: var(--text-shadow);
             }
         }
     }
@@ -95,7 +100,8 @@ $nav-height: 3rem;
     //the actual sidebar
     div {
         border-top: 2px solid rgba(0,0,0, .3);
-        background-color: $secondary-backgound-color;
+        background-color: $secondary-background-color; //fallback for unsupported values
+        background-color: var(--secondary-background-color);
         margin-top: 0;
         overflow-y: scroll;
         height: 100%;
@@ -128,7 +134,8 @@ $nav-height: 3rem;
                 right: -100%;
                 transform: translateX(-50%);
                 padding: 0 1rem;
-                background-color: $secondary-backgound-color;
+                background-color: $secondary-background-color; //fallback for unsupported values
+                background-color: var(--secondary-background-color);
             }
         }
 
@@ -149,6 +156,7 @@ $nav-height: 3rem;
     div > p {
         cursor: pointer;
         color: #ddd;
+        color: var(--primary-font-color);
 
         &:last-child {
             margin-bottom: 5rem;
@@ -158,8 +166,10 @@ $nav-height: 3rem;
     //the song number
     div p span {
         color: white;
+        color: var(--secondary-font-color);
         font-size: 2rem;
         text-shadow: 1.5px 1.5px 2px #111;
+        text-shadow: var(--text-shadow);
         font-weight: 900;
     }
 }
