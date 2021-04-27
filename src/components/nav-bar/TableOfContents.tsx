@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {scrollTo} from "../song-display/SongDisplay";
+import DarkModeSwitch from "./DarkModeSwitch";
 
 const formatSongs = (props: {
     songs: {title: string, reference?: React.RefObject<HTMLSpanElement>}[]
@@ -62,6 +63,7 @@ export default function TableOfContents(props: {
             visibility: props.isVisible?"visible":"collapse"
         }} onClick={() => props.setVisibility(false)}>
             <div>
+                <DarkModeSwitch />
                 {output}
             </div>
             

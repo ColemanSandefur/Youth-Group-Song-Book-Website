@@ -26,12 +26,15 @@ $nav-height: 3rem;
 
         display: flex;
         align-items: center;
+        max-width: Min(18ch, 50%);
 
         input {
             border-radius: .25rem;
             border: none;
             box-shadow: 2px 2px 1px #111;
             box-shadow: var(--text-shadow);
+            font-size: inherit;
+            max-width: 100%;
         }
         
     }
@@ -40,16 +43,18 @@ $nav-height: 3rem;
         height: .17em;
         width: 1em;
         background: white;
+        background: var(--primary-font-color);
         transition: transform .15s cubic-bezier(.68,-0.55,.27,1.55);
 
         &, &::before, &::after {
             box-shadow: 1.5px 1.5px 3px black;
             box-shadow: var(--text-shadow);
+            background-color: white;
+            background: var(--primary-font-color);
         }
 
         &::before, &::after {
             content: "";
-            background-color: white;
             display: block;
             height: 100%;
             position: relative;
@@ -98,7 +103,7 @@ $nav-height: 3rem;
     background-color: rgba(0,0,0, .5);
 
     //the actual sidebar
-    div {
+    & > div {
         border-top: 2px solid rgba(0,0,0, .3);
         background-color: $secondary-background-color; //fallback for unsupported values
         background-color: var(--secondary-background-color);
@@ -174,9 +179,31 @@ $nav-height: 3rem;
     }
 }
 
+.dark-mode-switch {
+    width: 100%;
+    text-align: center;
+    padding-top: 1rem;
+    
+    button {
+        box-sizing: border-box;
+        height: 3rem;
+        border-radius: 10px;
+        border: 3px solid var(--primary-background-color);
+        background-color: var(--primary-background-color);
+        color: var(--primary-font-color);
+        box-shadow: var(--text-shadow);
+        
+
+        &:hover {
+            background-color: var(--secondary-background-color);
+            
+        }
+    }
+}
+
 @media (min-width: 600px) {
     .Table-of-contents {
-        div {
+        & > div {
             width: 20em;
         }
     }

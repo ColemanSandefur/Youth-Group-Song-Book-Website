@@ -1,6 +1,6 @@
 @import "colors";
 
-$max-song-width: 30rem;
+$max-song-width: Max(30rem, 65%);
 
 .song {
     background-color: $primary-background-color;
@@ -9,6 +9,11 @@ $max-song-width: 30rem;
     color: var(--primary-font-color);
     text-align: left;
     display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 2em;
+    border-radius: 2em;
+    box-shadow: 1px 1px 4px 2px rgba(0,0,0, .15);
 
     h1 {
         margin: 0;
@@ -19,6 +24,10 @@ $max-song-width: 30rem;
 
     h1 span {
         font-weight: 900;
+    }
+
+    span p:last-child {
+        margin-bottom: 0;
     }
 }
 
@@ -35,7 +44,9 @@ body {
     display:grid;
     grid-template-columns: 1fr;
     justify-items: center;
-    
+
+    background-attachment: local;
+    background-size: 1em;
 
     &>* {
         padding: 3rem;

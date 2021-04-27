@@ -51,7 +51,7 @@ export default function SongDisplay(props:{}) {
         // initialize the songs for displaying
         setSongObjects(songs.map((song, index) => {
             song.reference = refs[index];
-            return song.object = <span ref={refs[index]} key={song.title}><Song title={song.title} lyrics={song.lyrics} id={index + 1}></Song></span>
+            return song.object = <span ref={refs[index]} key={song.title + index}><Song title={song.title} lyrics={song.lyrics} id={index + 1}></Song></span>
         }));
         
         // save refs to a state

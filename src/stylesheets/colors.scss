@@ -12,19 +12,17 @@ $secondary-background-color: #1f2229;
 }
 
 @mixin lightMode() {
-    --primary-background-color: #e4e4e4;
-    --secondary-background-color: #4f4f4f;
+    --primary-background-color: #ffffff;
+    --secondary-background-color: #c4c0c0;
     --primary-font-color: black;
     --secondary-font-color: #333;
     --highlight-font-color: #222288;
-    --text-shadow: none;
+    --text-shadow: 1.5px 1.5px 1px rgba(0,0,0, .15);
 }
 
 :root {
     @include darkMode();
 }
-
-
 
 //if user's system preference is light theme
 @media (prefers-color-scheme: light) {
@@ -38,3 +36,6 @@ $secondary-background-color: #1f2229;
     @include lightMode();
 }
 
+:root[color="dark"] {
+    @include darkMode();
+}
