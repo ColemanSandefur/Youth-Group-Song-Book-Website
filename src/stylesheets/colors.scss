@@ -1,25 +1,34 @@
 //only used for fallbacks
-$primary-background-color: #282c34;
-$secondary-background-color: #1f2229;
+$primary-background-color: #2E2E2E;
+$secondary-background-color: #242424;
+$primary-font-color: white;
+$secondary-font-color: #C9C9C9;
+$tertionary-font-color: #AEAEAE;
+$highlight-font-color: white;
+$text-shadow: 1.5px 1.5px 2px rgba(17, 17, 17, .25);
 
+//needss to be CSS vars to change them up at runtime
 @mixin darkMode() {
-    --primary-background-color: #282c34;
-    --secondary-background-color: #1f2229;
+    --primary-background-color: #2E2E2E;
+    --secondary-background-color: #242424;
     --primary-font-color: white;
-    --secondary-font-color: #ddd;
+    --secondary-font-color: #C9C9C9;
+    --tertionary-font-color: #AEAEAE;
     --highlight-font-color: white;
-    --text-shadow: 1.5px 1.5px 2px #111;
+    --text-shadow: 1.5px 1.5px 2px rgba(17, 17, 17, .75);
 }
 
 @mixin lightMode() {
     --primary-background-color: #ffffff;
-    --secondary-background-color: #c4c0c0;
+    --secondary-background-color: #EBEBEB;
     --primary-font-color: black;
-    --secondary-font-color: #333;
+    --secondary-font-color: #3b3b3b;
+    --tertionary-font-color: #424242;
     --highlight-font-color: #222288;
     --text-shadow: 1.5px 1.5px 1px rgba(0,0,0, .15);
 }
 
+//defaults to dark theme
 :root {
     @include darkMode();
 }
@@ -36,6 +45,7 @@ $secondary-background-color: #1f2229;
     @include lightMode();
 }
 
+//if user wants ot force dark theme
 :root[color="dark"] {
     @include darkMode();
 }

@@ -14,7 +14,7 @@ const formatSongs = (props: {
             dom: <p onClick={() => {
                 scrollTo(song.reference);
                 props.setVisibility(false);
-            }} key={index}><span>{index + 1 + ":\t"}</span> {song.title}</p>
+            }} key={index + song.title}><span>{index + 1 + ":\t"}</span> {song.title}</p>
         });
     });
     
