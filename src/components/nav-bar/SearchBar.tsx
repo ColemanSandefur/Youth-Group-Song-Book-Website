@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import "../../stylesheets/nav-bar.scss";
 
 export default function SearchBar(props: {
     search: (query: string) => void,
@@ -6,20 +7,31 @@ export default function SearchBar(props: {
     let [songQuery, setSongQuery] = useState("");
     let songInputRef = useRef<HTMLInputElement>(null);
 
+    let clearButton;
+    if (songQuery.length > 0) {
+        clearButton = (
+            <span className="remove" onClick={() => {
+                setSongQuery("");
+                props.search("");
+
+                if (songInputRef.current) {
+                    songInputRef.current.value = "";
+                }
+            }}>
+                &times;
+            </span>
+        )
+    }
+
     return (
         <span className="Song-input">
             <input 
                 ref={songInputRef} 
 
-                onKeyPress={(event) => {
-                    if (event.key === "Enter") {
-                        props.search(songQuery);
-                    }
-                }} 
-
-                onChange={(event) => {setSongQuery(event.target.value)}} 
-                placeholder={"search song # or title"} 
+                onChange={(event) => {props.search(event.target.value); setSongQuery(event.target.value)}} 
+                placeholder={"Search for a song..."} 
             />
+            {clearButton}
         </span>
     )
 }

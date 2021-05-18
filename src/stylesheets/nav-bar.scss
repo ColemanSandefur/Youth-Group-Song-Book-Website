@@ -1,6 +1,7 @@
 @import "colors";
 
 $nav-height: 3rem;
+$input-remove-width: 2rem; //width of the clear input button
 
 .Nav-bar {
     box-sizing: border-box;
@@ -24,16 +25,14 @@ $nav-height: 3rem;
 
         display: flex;
         align-items: center;
-        // max-width: Min(18ch, 50%);
         width: 100%;
         padding-top: 1rem;
         padding-bottom: 1rem;
         background-color: $secondary-background-color;
         background-color: var(--secondary-background-color);
         position: sticky;
-        top:$nav-height;
-
-        
+        top:0;
+        z-index: 1;
 
         input {
             border-radius: .25rem;
@@ -41,14 +40,28 @@ $nav-height: 3rem;
             box-shadow: $text-shadow;
             box-shadow: var(--text-shadow);
             font-size: inherit;
-            // max-width: 100%;
             min-width: 100%;
+            padding-right: $input-remove-width;
+            box-sizing: border-box;
 
             background-color: $primary-background-color;
             background-color: var(--primary-background-color);
 
             color: $tertionary-font-color;
             color: var(--tertionary-font-color);
+
+            position: relative;
+        }
+
+        .remove {
+            position: absolute;
+            right: 0rem;
+            top: 1rem;
+            bottom: 1rem;
+            width: $input-remove-width;
+            text-align: center;
+            cursor: pointer;
+            // line-height: 1rem;
         }
         
     }
@@ -108,8 +121,6 @@ $nav-height: 3rem;
     margin-top: $nav-height;
     height: calc(100vh - #{$nav-height});
     
-    z-index: 0;
-    
     box-sizing: border-box;
     word-wrap: break-word;
     width: 100vw;
@@ -128,6 +139,7 @@ $nav-height: 3rem;
         padding-right: 1rem;
         box-sizing: border-box;
         width: 100vw;
+        z-index: 1;
     }
 
     //the section header
@@ -135,6 +147,7 @@ $nav-height: 3rem;
         text-align: center;
         position: relative;
         z-index: 0;
+        user-select: none;
 
         & > span {
             position: relative;
@@ -179,6 +192,7 @@ $nav-height: 3rem;
         cursor: pointer;
         color: $secondary-font-color;
         color: var(--secondary-font-color);
+        user-select: none;
 
         &:last-child {
             margin-bottom: 5rem;
@@ -193,6 +207,8 @@ $nav-height: 3rem;
         text-shadow: 1.5px 1.5px 2px #111;
         text-shadow: var(--text-shadow);
         font-weight: 900;
+
+        user-select: none;
     }
 }
 
