@@ -4,7 +4,7 @@ import SongDisplay from "./components/song-display/SongDisplay"
 function App() {
   return (
     <div className="App">
-      <SongDisplay></SongDisplay>
+      <SongDisplay/>
     </div>
   );
 }

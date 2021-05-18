@@ -21,12 +21,17 @@ $nav-height: 3rem;
     z-index: 1;
 
     .Song-input {
-        position: absolute;
-        right: .5rem;
 
         display: flex;
         align-items: center;
-        max-width: Min(18ch, 50%);
+        // max-width: Min(18ch, 50%);
+        width: 100%;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        background-color: $secondary-background-color;
+        background-color: var(--secondary-background-color);
+        position: sticky;
+        top:$nav-height;
 
         
 
@@ -36,7 +41,8 @@ $nav-height: 3rem;
             box-shadow: $text-shadow;
             box-shadow: var(--text-shadow);
             font-size: inherit;
-            max-width: 100%;
+            // max-width: 100%;
+            min-width: 100%;
 
             background-color: $primary-background-color;
             background-color: var(--primary-background-color);
@@ -111,7 +117,7 @@ $nav-height: 3rem;
     background-color: rgba(0,0,0, .5);
 
     //the actual sidebar
-    & > div {
+    & > div.content {
         border-top: 2px solid rgba(0,0,0, .3);
         background-color: $secondary-background-color; //fallback for unsupported values
         background-color: var(--secondary-background-color);
@@ -221,7 +227,7 @@ $nav-height: 3rem;
 
 @media (min-width: 600px) {
     .Table-of-contents {
-        & > div {
+        & > div.content {
             width: 20em;
         }
     }
