@@ -1,6 +1,32 @@
-# Getting Started with Create React App
+# Song Book
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## What is it?
+
+This is a song book that was specifically created to copy an existing song book's song order and make it digital. There is a live build that you can find at [www.youthgroupsongs.com](https://youthgroupsongs.com)
+
+## What can it do?
+
+There are currently around ~200 songs and you can search through the songs with a search bar, which you can find in the side menu. With this search bar you can either search by title, or by song number. The search results will appear in the side menu, clicking on one of the results will automatically scroll you to the song.
+
+## Is it possible to use this offline?
+
+You can use this offline if you install the app by:
+
+### Android/PC
+* Go to the browser's menu
+* Select install
+
+### iOS
+* Press the share button
+* Select add to home screen
+
+# Running it yourself
+
+## Install dependencies
+
+1. Make sure you have [Node.js](https://nodejs.org/en/) installed
+1. Install [yarn](https://yarnpkg.com/) from the npm
+1. Type `yarn` into the terminal, this will install all dependencies
 
 ## Available Scripts
 
