@@ -2,9 +2,16 @@ import { useEffect, useState } from "react";
 import {scrollTo} from "../song-display/SongDisplay";
 import SearchBar from "./SearchBar";
 
+const cleanse = (search: string) => {
+    return search.toLowerCase().replaceAll(/[^\w\d\s]/g, "");
+}
+
 const matches = (search: string, song: {title: string, lyrics: string[], number: number}) => {
-    search = search.toLowerCase();
-    return song.title.toLowerCase().includes(search) || song.number + 1 === Number.parseInt(search)
+
+    //remove unnecessary characters like commas and periods
+    let title = cleanse(song.title);
+
+    return title.includes(search) || song.number + 1 === Number.parseInt(search)
 }
 
 //returns an array of songs that match the search
@@ -12,6 +19,8 @@ const search = (search: string, songs: {title: string, lyrics: string[]}[]) => {
     let output = songs.slice().map((value, index) => {
         return {...value, number: index};
     });
+
+    search = cleanse(search);
 
     for (let i = 0; i < output.length; i++) {
         if (!matches(search, output[i])) {
