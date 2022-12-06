@@ -39,10 +39,10 @@ export default function SongDisplay(props:{}) {
     // keep track of the song objects to display
     const [songObjects, setSongObjects] = useState<JSX.Element[]>();
 
-    let refs: React.RefObject<HTMLSpanElement>[] = songs.map(() => {return createRef()})
+    let refs: React.RefObject<HTMLDivElement>[] = songs.map(() => {return createRef()})
     songs.forEach((song, index) => {
         song.reference = refs[index];
-        return song.object = <span ref={refs[index]} key={song.title + index}><Song title={song.title} lyrics={song.lyrics} id={index + 1}></Song></span>
+        return song.object = <Song title={song.title} lyrics={song.lyrics} id={index + 1} ref={refs[index]} key={song.title + index}></Song>
     });
 
     let songHTML = songs.map((song) => song.object);
@@ -81,13 +81,13 @@ export default function SongDisplay(props:{}) {
     }
 
     return (
-        <div>
+        <>
             {/* <TableOfContents scrollTo={scrollTo} songs={songs} /> */}
             <NavBar search={searchForElement} songs={songs}/>
             <div className="All-songs custom-scrollbar" style={{position: "relative"}}>
                 <span style={{visibility: "collapse", position: "absolute"}}></span>
                 {songHTML}
             </div>
-        </div>
+        </>
     );
 }

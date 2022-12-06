@@ -14,4 +14,8 @@ const IndexPage: React.FC<PageProps> = () => {
 
 export default IndexPage
 
-export const Head: HeadFC = () => <title>Youth Group Songs</title>
+export const Head: HeadFC = () => (<>
+  <title>Youth Group Songs</title>
+  <meta name="keywords" content="Youth Group Songs, YG Songs, yg-songs, church songs" />
+  <meta name="description" content="A collection of 200+ popular youth group songs" />
+</>)

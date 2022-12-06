@@ -46,12 +46,15 @@ body {
     display:grid;
     grid-template-columns: 1fr;
     justify-items: center;
+    box-sizing: border-box;
 
     background-attachment: local;
     background-size: 1em;
 
+    gap: 1.25rem 2.5rem;
+    padding: 0.625rem 1.25rem;
+
     &>* {
-        padding: .625rem 1.25rem;
         width: 100%;
         display: block;
         text-align: left;

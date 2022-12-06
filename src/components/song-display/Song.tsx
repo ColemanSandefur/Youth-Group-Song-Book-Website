@@ -1,6 +1,6 @@
 import * as React from "react"
 
-export default function Song(props: {title: string, lyrics: string[], id?: number, ref?: React.RefObject<HTMLDivElement>}) {
+var Song = React.forwardRef((props: {title: string, lyrics: string[], id?: number}, ref) => {
     //format each element of the array into a JSX Element
     let output = props.lyrics.map((value, index) => {
         //an empty <p> is not normally displayed so we should make it a <br> instead
@@ -14,9 +14,11 @@ export default function Song(props: {title: string, lyrics: string[], id?: numbe
     let prefix=props.id ? props.id + ": " : "";
 
     return (
-        <div className="song" ref={props.ref}>
+        <div className="song" ref={ref}>
             <h1><span>{prefix}</span>{props.title}</h1>
             <span>{output}</span>
         </div>
     );
-}
+});
+
+export default Song;

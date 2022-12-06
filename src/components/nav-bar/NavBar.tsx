@@ -14,7 +14,6 @@ export default function NavBar(props:{
                 <div className={isVisible?"open":""} />
             </div>
             <span>Youth Group Songs</span>
-            <title>Youth Group Songs</title>
             <TableOfContents songs={props.songs} setVisibility={setVisibility} isVisible={isVisible} />
         </div>
     );
