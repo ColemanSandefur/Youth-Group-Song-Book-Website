@@ -1,5 +1,5 @@
-import { useState } from "react";
-import "../../stylesheets/nav-bar.scss";
+import React, { useState } from "react";
+import "../../styles/nav-bar.scss";
 import TableOfContents from "./TableOfContents";
 
 export default function NavBar(props:{
@@ -13,7 +13,8 @@ export default function NavBar(props:{
             <div className={"Expand-icon"} onClick={() => setVisibility(!isVisible)}>
                 <div className={isVisible?"open":""} />
             </div>
-            <span>Songs</span>
+            <span>Youth Group Songs</span>
+            <title>Youth Group Songs</title>
             <TableOfContents songs={props.songs} setVisibility={setVisibility} isVisible={isVisible} />
         </div>
     );

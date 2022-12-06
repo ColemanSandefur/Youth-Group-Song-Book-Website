@@ -1,13 +1,14 @@
 import React, { useState, useEffect, createRef } from "react";
-import "../../stylesheets/song-display.scss";
+import "../../styles/song-display.scss";
 import Song from "./Song";
 import NavBar from "../nav-bar/NavBar";
-import JSONSongs from "../../songs.json";
+import JSONSongs from "../../content/songs.json";
+import SongData from "../../types/SongData";
 
 // all the songs that we have
 // object is the HTML object that corresponds to the song
 // reference is the React reference to the DOM object
-let songs: {title: string, lyrics: string[], object?: JSX.Element, reference?: React.RefObject<HTMLSpanElement>}[] = JSONSongs;
+let songs: SongData[] = JSONSongs;
 
 export const scrollTo = (ref?: React.RefObject<HTMLSpanElement>) => {
     if (!ref?.current) {
@@ -38,20 +39,13 @@ export default function SongDisplay(props:{}) {
     // keep track of the song objects to display
     const [songObjects, setSongObjects] = useState<JSX.Element[]>();
 
-    // called on page load
-    useEffect(() => {
-        // create an array of references the same size as songs
-        let refs: React.RefObject<HTMLSpanElement>[] = songs.map(() => {return createRef()})
+    let refs: React.RefObject<HTMLSpanElement>[] = songs.map(() => {return createRef()})
+    songs.forEach((song, index) => {
+        song.reference = refs[index];
+        return song.object = <span ref={refs[index]} key={song.title + index}><Song title={song.title} lyrics={song.lyrics} id={index + 1}></Song></span>
+    });
 
-        // initialize the songs for displaying
-        setSongObjects(songs.map((song, index) => {
-            song.reference = refs[index];
-            return song.object = <span ref={refs[index]} key={song.title + index}><Song title={song.title} lyrics={song.lyrics} id={index + 1}></Song></span>
-        }));
-        
-        // save refs to a state
-        setSongRefs(refs);
-    }, []);
+    let songHTML = songs.map((song) => song.object);
 
     const searchForElement = (query: string) => {
         //will test if query is a number
@@ -92,7 +86,7 @@ export default function SongDisplay(props:{}) {
             <NavBar search={searchForElement} songs={songs}/>
             <div className="All-songs custom-scrollbar" style={{position: "relative"}}>
                 <span style={{visibility: "collapse", position: "absolute"}}></span>
-                {songObjects}
+                {songHTML}
             </div>
         </div>
     );

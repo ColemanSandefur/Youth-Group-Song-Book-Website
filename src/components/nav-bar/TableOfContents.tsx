@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {scrollTo} from "../song-display/SongDisplay";
 import SearchBar from "./SearchBar";
 

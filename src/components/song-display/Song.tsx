@@ -1,3 +1,5 @@
+import * as React from "react"
+
 export default function Song(props: {title: string, lyrics: string[], id?: number, ref?: React.RefObject<HTMLDivElement>}) {
     //format each element of the array into a JSX Element
     let output = props.lyrics.map((value, index) => {

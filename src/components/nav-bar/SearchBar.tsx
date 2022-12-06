@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import "../../stylesheets/nav-bar.scss";
+import React, { useRef, useState } from "react";
+import "../../styles/nav-bar.scss";
 
 export default function SearchBar(props: {
     search: (query: string) => void,
