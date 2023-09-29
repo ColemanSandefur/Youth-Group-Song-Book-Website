@@ -1,6 +1,6 @@
 @import "colors";
 
-$max-song-width: Max(30rem, 65%);
+$max-song-width: min(40rem, 80%);
 
 .song {
     background-color: $primary-background-color;
@@ -84,8 +84,6 @@ body {
 
 @media (min-width: 800px) {
     .All-songs {
-        grid-template-columns: 1fr 1fr;
-
         &>* {
             max-width: $max-song-width;
             min-width: 0;
