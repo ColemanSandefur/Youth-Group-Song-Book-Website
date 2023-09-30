@@ -106,8 +106,8 @@ export default function TableOfContents(props: {
     return (
         <div className="Table-of-contents custom-scrollbar" style={{
             visibility: props.isVisible?"visible":"collapse"
-        }} >
-            <div className="content">
+        }} onClick={() => props.setVisibility(false)} >
+            <div className="content" onClick={(e) => e.stopPropagation()}>
                 <SearchBar search={updateSearch}/>
                 <div>
                     {output}
