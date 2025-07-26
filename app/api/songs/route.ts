@@ -1,9 +1,19 @@
-import { NextResponse } from 'next/server';
-import songs from '@/data/songs.json';
-import { Song } from '@/types/songs';
+import { NextResponse } from "next/server";
+import rawSongs from "@/data/songs.json";
+import { Song } from "@/types/songs";
+
+const songs = rawSongs.map(
+  (song, idx) =>
+    ({
+      number: idx + 1,
+      ...song,
+    } as Song)
+);
 
 export async function GET() {
-  const typedSongs: Song[] = songs;
-  return NextResponse.json(typedSongs);
+  return NextResponse.json(songs);
 }
 
+export async function getSongs() {
+  return songs;
+}
