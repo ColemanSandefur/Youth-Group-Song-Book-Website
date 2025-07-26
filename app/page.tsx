@@ -1,5 +1,14 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { getSongs } from "./api/songs/route";
+import { Button } from "@/components/ui/button";
+import { Fullscreen, Heart } from "lucide-react";
 
 export default async function Home() {
   return <SongList />;
@@ -33,6 +42,20 @@ async function SongList() {
                 )
               )}
             </CardContent>
+            <CardFooter className="flex justify-end">
+              <CardAction>
+                <Button variant="ghost" size="icon" className="size-12">
+                  <Fullscreen />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="size-8 text-red-600"
+                >
+                  <Heart className="fill-current" fill="currentColor" />
+                </Button>
+              </CardAction>
+            </CardFooter>
           </Card>
         ))}
       </div>
