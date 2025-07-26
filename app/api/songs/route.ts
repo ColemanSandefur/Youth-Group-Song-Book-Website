@@ -14,6 +14,6 @@ export async function GET() {
   return NextResponse.json(songs);
 }
 
-export async function getSongs() {
+export function getSongs() {
   return songs;
 }

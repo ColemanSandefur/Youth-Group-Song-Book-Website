@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Navbar } from "@/components/navbar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import AppSidebar from "@/components/app-sidebar";
 
 export const metadata: Metadata = {
   title: "Youth Group Songs",
@@ -13,15 +16,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`antialiased`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`antialiased [--header-height:calc(--spacing(14))]`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <SidebarProvider className="flex flex-col">
+            <Navbar />
+            <div className="flex flex-1">
+              <AppSidebar />
+              <SidebarInset>{children}</SidebarInset>
+            </div>
+          </SidebarProvider>
         </ThemeProvider>
       </body>
     </html>

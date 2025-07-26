@@ -6,7 +6,7 @@ export default async function Home() {
 }
 
 async function SongList() {
-  const songs = await getSongs();
+  const songs = getSongs();
 
   return (
     <>
@@ -14,6 +14,7 @@ async function SongList() {
         {songs.map((song, i) => (
           <Card
             key={song.title + i}
+            id={`song${song.number}`}
             className="w-full max-w-lg ml-auto mx-auto"
           >
             <CardHeader>
@@ -22,11 +23,15 @@ async function SongList() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              {song.lyrics.map((line, i) => (
-                <p className="my-2" key={line + i}>
-                  {line}
-                </p>
-              ))}
+              {song.lyrics.map((line, i) =>
+                line == "" ? (
+                  <br key={line + i} />
+                ) : (
+                  <p className="my-4" key={line + i}>
+                    {line}
+                  </p>
+                )
+              )}
             </CardContent>
           </Card>
         ))}
