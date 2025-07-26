@@ -1,6 +1,5 @@
 import { getSongs } from "@/app/api/songs/route";
 import { Sidebar, SidebarContent } from "./ui/sidebar";
-import { Button } from "./ui/button";
 import SongButton from "./song-button";
 
 const songs = getSongs();
