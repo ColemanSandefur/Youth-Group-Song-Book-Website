@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/app-sidebar";
+import { SongProvider } from "./context/song-context";
 
 export const metadata: Metadata = {
   title: "Youth Group Songs",
@@ -24,13 +25,15 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SidebarProvider className="flex flex-col">
-            <Navbar />
-            <div className="flex flex-1">
-              <AppSidebar />
-              <SidebarInset>{children}</SidebarInset>
-            </div>
-          </SidebarProvider>
+          <SongProvider>
+            <SidebarProvider className="flex flex-col">
+              <Navbar />
+              <div className="flex flex-1">
+                <AppSidebar />
+                <SidebarInset>{children}</SidebarInset>
+              </div>
+            </SidebarProvider>
+          </SongProvider>
         </ThemeProvider>
       </body>
     </html>
