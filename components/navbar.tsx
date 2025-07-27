@@ -20,7 +20,13 @@ export function Navbar() {
           <SidebarIcon />
         </Button>
         <Separator orientation="vertical" className="mr-2 h-4" />
-        <h1 className="text-xl font-bold text-primary">Youth Group Songs</h1>
+        <Button
+          variant="ghost"
+          className="text-2xl font-bold text-blue-500 hover:text-blue-500"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          Youth Group Songs
+        </Button>
       </div>
     </header>
   );
