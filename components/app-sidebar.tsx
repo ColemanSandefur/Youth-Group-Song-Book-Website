@@ -12,7 +12,7 @@ import { Label } from "@radix-ui/react-label";
 import { Search } from "lucide-react";
 import { Separator } from "@radix-ui/react-separator";
 import { useSongs } from "@/app/context/song-context";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function AppSidebar({
   ...props
@@ -20,6 +20,10 @@ export default function AppSidebar({
   const { songs } = useSongs();
 
   const [filteredSongs, setFilteredSongs] = useState(songs);
+
+  useEffect(() => {
+    setFilteredSongs(songs);
+  }, [songs]);
 
   const cleanse = (search: string) => {
     return (search ?? "").toLowerCase().replaceAll(/[^\w\d\s]/g, "");
