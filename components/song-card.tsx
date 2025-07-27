@@ -38,7 +38,7 @@ export default function SongCard({ song }: { song: Song }) {
       </CardContent>
       <CardFooter className="flex justify-end">
         <CardAction>
-          <Button variant="ghost" size="icon" className="size-12">
+          <Button variant="ghost" size="icon" className="size-8">
             <Fullscreen />
           </Button>
           {isHearted ? (
@@ -48,7 +48,7 @@ export default function SongCard({ song }: { song: Song }) {
               className="size-8 text-red-600 hover:text-red-600"
               onClick={toggleHearted}
             >
-              <Heart className="fill-current" fill="currentColor" />
+              <Heart className="fill-current" />
             </Button>
           ) : (
             <Button

@@ -2,8 +2,11 @@
 
 import { Song } from "@/types/songs";
 import { Button } from "./ui/button";
+import { useSidebar } from "./ui/sidebar";
 
 export default function SongButton({ song }: { song: Song }) {
+  const { setOpenMobile } = useSidebar();
+
   return (
     <Button
       variant="link"
@@ -17,6 +20,8 @@ export default function SongButton({ song }: { song: Song }) {
         const offset = header?.clientHeight ?? 80;
 
         const y = element.getBoundingClientRect().top + window.scrollY - offset;
+
+        setOpenMobile(false);
 
         window.scrollTo({ top: y, behavior: "smooth" });
       }}
