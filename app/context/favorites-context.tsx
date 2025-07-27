@@ -12,6 +12,7 @@ type FavoritesContextType = {
   favorites: string[];
   toggleFavorite: (songId: string) => void;
   isFavorite: (songId: string) => boolean;
+  clearFavorites: () => void;
 };
 
 const FavoritesContext = createContext<FavoritesContextType | undefined>(
@@ -51,9 +52,11 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 
   const isFavorite = (songId: string) => favorites.includes(songId);
 
+  const clearFavorites = () => setFavorites([]);
+
   return (
     <FavoritesContext.Provider
-      value={{ favorites, toggleFavorite, isFavorite }}
+      value={{ favorites, toggleFavorite, isFavorite, clearFavorites }}
     >
       {children}
     </FavoritesContext.Provider>

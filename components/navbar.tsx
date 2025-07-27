@@ -3,6 +3,7 @@
 import { SidebarIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { useSidebar } from "./ui/sidebar";
+import FavoritesSheet from "./favorites-sheet";
 
 export function Navbar() {
   const { toggleSidebar } = useSidebar();
@@ -25,6 +26,9 @@ export function Navbar() {
         >
           Youth Group Songs
         </Button>
+        <span className="flex flex-1 justify-end">
+          <FavoritesSheet />
+        </span>
       </div>
     </header>
   );
