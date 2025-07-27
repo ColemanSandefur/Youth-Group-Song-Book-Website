@@ -8,15 +8,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import rawSongs from "@/data/songs.json";
-
-export const defaultSongs = rawSongs.map(
-  (song, idx) =>
-    ({
-      number: idx + 1,
-      ...song,
-    } as Song)
-);
+import { getDefaultSongs } from "@/data/song-data";
 
 type SongContextType = {
   songs: Song[];
@@ -34,7 +26,7 @@ export function useSongs() {
 }
 
 export function SongProvider({ children }: { children: ReactNode }) {
-  const [songs, setSongs] = useState<Song[]>(defaultSongs);
+  const [songs, setSongs] = useState<Song[]>(getDefaultSongs());
   const [loading, setLoading] = useState(true);
   const [fetched, setFetched] = useState(true);
   const [error, setError] = useState<string | null>(null);

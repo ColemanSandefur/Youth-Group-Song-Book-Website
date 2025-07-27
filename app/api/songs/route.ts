@@ -1,6 +1,6 @@
-import { defaultSongs } from "@/app/context/song-context";
+import { getDefaultSongs } from "@/data/song-data";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  return NextResponse.json(defaultSongs);
+  return NextResponse.json(getDefaultSongs());
 }
