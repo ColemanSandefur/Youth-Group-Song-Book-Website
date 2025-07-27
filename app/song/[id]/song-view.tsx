@@ -3,10 +3,10 @@
 import { useSongs } from "@/app/context/song-context";
 import SongCard from "@/components/song-card";
 
-export default function SongView({ songId }: { songId: number }) {
+export default function SongView({ songId }: { songId: string }) {
   const { songs } = useSongs();
 
-  const song = songs.find((song) => song.number == songId);
+  const song = songs.find((song) => song.uuid == songId);
 
   if (!song) {
     return <>No Songs found!</>;

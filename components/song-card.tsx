@@ -11,9 +11,9 @@ import {
   CardFooter,
   CardAction,
 } from "./ui/card";
-import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useFavorites } from "@/app/context/favorites-context";
 
 export default function SongCard({
   song,
@@ -22,13 +22,11 @@ export default function SongCard({
   song: Song;
   isFullscreen?: boolean;
 }) {
-  const [isHearted, setIsHearted] = useState(false);
+  const { isFavorite, toggleFavorite } = useFavorites();
   const router = useRouter();
 
-  const toggleHearted = () => setIsHearted(!isHearted);
-
   return (
-    <Card id={`song${song.number}`} className="w-full max-w-lg ml-auto mx-auto">
+    <Card id={song.uuid} className="w-full max-w-lg ml-auto mx-auto">
       <CardHeader>
         <CardTitle className="text-lg">
           {song.number}: {song.title}
@@ -57,18 +55,18 @@ export default function SongCard({
               <Shrink />
             </Button>
           ) : (
-            <Link href={`/song/${song.number}`}>
+            <Link href={`/song/${song.uuid}`}>
               <Button variant="ghost" size="icon" className="size-8">
                 <Fullscreen />
               </Button>
             </Link>
           )}
-          {isHearted ? (
+          {isFavorite(song.uuid) ? (
             <Button
               variant="ghost"
               size="icon"
               className="size-8 text-red-600 hover:text-red-600"
-              onClick={toggleHearted}
+              onClick={() => toggleFavorite(song.uuid)}
             >
               <Heart className="fill-current" />
             </Button>
@@ -77,7 +75,7 @@ export default function SongCard({
               variant="ghost"
               size="icon"
               className="size-8"
-              onClick={toggleHearted}
+              onClick={() => toggleFavorite(song.uuid)}
             >
               <Heart />
             </Button>

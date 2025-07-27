@@ -19,7 +19,7 @@ export default function SongButton({
       variant="link"
       className="text-left justify-start whitespace-normal"
       onClick={(e) => {
-        const element = document.getElementById(`song${song.number}`);
+        const element = document.getElementById(song.uuid);
         if (!element) return;
 
         const header = document.querySelector("header");

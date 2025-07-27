@@ -5,6 +5,8 @@ import { Navbar } from "@/components/navbar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/app-sidebar";
 import { SongProvider } from "./context/song-context";
+import { FavoritesProvider } from "./context/favorites-context";
+import { ReactNode } from "react";
 
 export const metadata: Metadata = {
   title: "Youth Group Songs",
@@ -19,23 +21,31 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`antialiased [--header-height:calc(--spacing(14))]`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <SongProvider>
-            <SidebarProvider className="flex flex-col">
-              <Navbar />
-              <div className="flex flex-1">
-                <AppSidebar />
-                <SidebarInset>{children}</SidebarInset>
-              </div>
-            </SidebarProvider>
-          </SongProvider>
-        </ThemeProvider>
+        <MainProvider>
+          <SidebarProvider className="flex flex-col">
+            <Navbar />
+            <div className="flex flex-1">
+              <AppSidebar />
+              <SidebarInset>{children}</SidebarInset>
+            </div>
+          </SidebarProvider>
+        </MainProvider>
       </body>
     </html>
+  );
+}
+
+function MainProvider({ children }: { children: ReactNode }) {
+  return (
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <SongProvider>
+        <FavoritesProvider>{children}</FavoritesProvider>
+      </SongProvider>
+    </ThemeProvider>
   );
 }

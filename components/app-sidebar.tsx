@@ -62,9 +62,9 @@ export default function AppSidebar({
       </SidebarHeader>
       <SidebarSeparator className="mx-0" />
       <SidebarContent>
-        {filteredSongs.map((song, i) => (
+        {filteredSongs.map((song) => (
           <SongButton
-            key={i}
+            key={song.uuid}
             song={song}
             onClick={() => setFilteredSongs(songs)}
           />

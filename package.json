@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "add-uuids": "tsx scripts/add-uuids.ts"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.14",
@@ -32,6 +33,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.4.4",
     "tailwindcss": "^4",
+    "tsx": "^4.20.3",
     "tw-animate-css": "^1.3.6",
     "typescript": "^5"
   }

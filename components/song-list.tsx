@@ -10,7 +10,7 @@ export default function SongList() {
     <>
       <div className="flex flex-col p-4 gap-4">
         {songs.map((song) => (
-          <SongCard key={song.number + song.title} song={song} />
+          <SongCard key={song.uuid} song={song} />
         ))}
       </div>
     </>
