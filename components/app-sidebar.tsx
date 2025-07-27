@@ -22,7 +22,7 @@ export default function AppSidebar({
   const [filteredSongs, setFilteredSongs] = useState(songs);
 
   const cleanse = (search: string) => {
-    return search.toLowerCase().replaceAll(/[^\w\d\s]/g, "");
+    return (search ?? "").toLowerCase().replaceAll(/[^\w\d\s]/g, "");
   };
 
   return (
@@ -45,7 +45,7 @@ export default function AppSidebar({
                 return;
               }
 
-              const searchTerm = e.target.value;
+              const searchTerm = cleanse(e.target.value);
 
               setFilteredSongs(
                 songs.filter(
