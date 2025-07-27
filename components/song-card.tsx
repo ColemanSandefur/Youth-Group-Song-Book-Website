@@ -1,7 +1,7 @@
 "use client";
 
 import { Song } from "@/types/songs";
-import { Fullscreen, Heart } from "lucide-react";
+import { Fullscreen, Heart, Shrink } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -12,9 +12,18 @@ import {
   CardAction,
 } from "./ui/card";
 import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-export default function SongCard({ song }: { song: Song }) {
+export default function SongCard({
+  song,
+  isFullscreen = false,
+}: {
+  song: Song;
+  isFullscreen?: boolean;
+}) {
   const [isHearted, setIsHearted] = useState(false);
+  const router = useRouter();
 
   const toggleHearted = () => setIsHearted(!isHearted);
 
@@ -38,9 +47,22 @@ export default function SongCard({ song }: { song: Song }) {
       </CardContent>
       <CardFooter className="flex justify-end">
         <CardAction>
-          <Button variant="ghost" size="icon" className="size-8">
-            <Fullscreen />
-          </Button>
+          {isFullscreen ? (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="size-8"
+              onClick={() => router.back()}
+            >
+              <Shrink />
+            </Button>
+          ) : (
+            <Link href={`/song/${song.number}`}>
+              <Button variant="ghost" size="icon" className="size-8">
+                <Fullscreen />
+              </Button>
+            </Link>
+          )}
           {isHearted ? (
             <Button
               variant="ghost"

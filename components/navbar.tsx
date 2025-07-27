@@ -1,6 +1,5 @@
 "use client";
 
-import { Separator } from "@radix-ui/react-separator";
 import { SidebarIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { useSidebar } from "./ui/sidebar";
@@ -19,7 +18,6 @@ export function Navbar() {
         >
           <SidebarIcon />
         </Button>
-        <Separator orientation="vertical" className="mr-2 h-4" />
         <Button
           variant="ghost"
           className="text-2xl font-bold text-blue-500 hover:text-blue-500"
