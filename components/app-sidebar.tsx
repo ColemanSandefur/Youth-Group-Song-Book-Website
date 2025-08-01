@@ -6,28 +6,28 @@ import {
   SidebarHeader,
   SidebarInput,
   SidebarSeparator,
+  useSidebar,
 } from "./ui/sidebar";
 import SongButton from "./song-button";
 import { Label } from "@radix-ui/react-label";
 import { Search } from "lucide-react";
 import { Separator } from "@radix-ui/react-separator";
 import { useSongs } from "@/app/context/song-context";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
+import { Song } from "@/types/songs";
 
 export default function AppSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
   const { songs } = useSongs();
+  const { setOpenMobile } = useSidebar();
 
-  const [filteredSongs, setFilteredSongs] = useState(songs);
+  const [search, setSearch] = useState("");
 
-  useEffect(() => {
-    setFilteredSongs(songs);
-  }, [songs]);
-
-  const cleanse = (search: string) => {
-    return (search ?? "").toLowerCase().replaceAll(/[^\w\d\s]/g, "");
-  };
+  const filteredSongs = useMemo(
+    () => searchSongs(songs, search),
+    [search, songs]
+  );
 
   return (
     <Sidebar
@@ -43,21 +43,9 @@ export default function AppSidebar({
             id="search"
             placeholder="Type to search..."
             className="h-8 pl-7"
+            value={search}
             onChange={(e) => {
-              if (!e.target) {
-                setFilteredSongs(songs);
-                return;
-              }
-
-              const searchTerm = cleanse(e.target.value);
-
-              setFilteredSongs(
-                songs.filter(
-                  (song) =>
-                    cleanse(song.title).includes(searchTerm) ||
-                    song.number == Number.parseInt(searchTerm)
-                )
-              );
+              setSearch(e.target.value);
             }}
           />
           <Search className="pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 opacity-50 select-none" />
@@ -70,10 +58,26 @@ export default function AppSidebar({
           <SongButton
             key={song.uuid}
             song={song}
-            onClick={() => setFilteredSongs(songs)}
+            onClick={() => {
+              setOpenMobile(false);
+            }}
           />
         ))}
       </SidebarContent>
     </Sidebar>
+  );
+}
+
+function searchSongs(songs: Song[], search: string) {
+  const cleanse = (search: string) => {
+    return (search ?? "").toLowerCase().replaceAll(/[^\w\d\s]/g, "");
+  };
+
+  const searchTerm = cleanse(search);
+
+  return songs.filter(
+    (song) =>
+      cleanse(song.title).includes(searchTerm) ||
+      song.number == Number.parseInt(searchTerm)
   );
 }

@@ -2,8 +2,9 @@
 
 import { Song } from "@/types/songs";
 import { Button } from "./ui/button";
-import { useSidebar } from "./ui/sidebar";
 import { MouseEventHandler } from "react";
+import { scrollToSong } from "@/lib/scrollToSong";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function SongButton({
   song,
@@ -12,27 +13,25 @@ export default function SongButton({
   song: Song;
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
 }) {
-  const { setOpenMobile } = useSidebar();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const shouldRoute = pathname != "/";
+
+  const scroll: MouseEventHandler<HTMLButtonElement> = (e) => {
+    if (shouldRoute) {
+      router.push(`/?song=${song.uuid}`);
+    } else {
+      scrollToSong(song);
+    }
+    onClick?.(e);
+  };
 
   return (
     <Button
       variant="link"
       className="text-left justify-start whitespace-normal"
-      onClick={(e) => {
-        const element = document.getElementById(song.uuid);
-        if (!element) return;
-
-        const header = document.querySelector("header");
-
-        const offset = header?.clientHeight ?? 80;
-
-        const y = element.getBoundingClientRect().top + window.scrollY - offset;
-
-        setOpenMobile(false);
-
-        window.scrollTo({ top: y, behavior: "smooth" });
-        onClick?.(e);
-      }}
+      onClick={scroll}
     >
       {song.number}: {song.title}
     </Button>
