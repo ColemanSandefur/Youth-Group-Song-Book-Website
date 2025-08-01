@@ -3,7 +3,7 @@
 import { useSongs } from "@/app/context/song-context";
 import SongCard from "./song-card";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { scrollToSong } from "@/lib/scrollToSong";
 
 export default function SongList() {
@@ -16,7 +16,9 @@ export default function SongList() {
           <SongCard key={song.uuid} song={song} />
         ))}
       </div>
-      <ScrollToSong />
+      <Suspense>
+        <ScrollToSong />
+      </Suspense>
     </>
   );
 }
