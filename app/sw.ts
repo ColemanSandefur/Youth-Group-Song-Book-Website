@@ -21,6 +21,23 @@ const serwist = new Serwist({
   navigationPreload: true,
   runtimeCaching: [
     {
+      matcher: ({ url }) => url.pathname === "/",
+      handler: new StaleWhileRevalidate({
+        cacheName: "song-list",
+        matchOptions: {
+          ignoreSearch: true,
+          ignoreMethod: true,
+        },
+        plugins: [
+          new ExpirationPlugin({
+            maxEntries: 4,
+            maxAgeSeconds: 24 * 60 * 60, // 24 Hours
+            maxAgeFrom: "last-used",
+          }),
+        ],
+      }),
+    },
+    {
       matcher: ({ url }) => url.pathname === "/song",
       handler: new StaleWhileRevalidate({
         cacheName: "song-name",
