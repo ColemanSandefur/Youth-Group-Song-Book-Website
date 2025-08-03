@@ -55,7 +55,7 @@ export default function SongCard({
               <Shrink />
             </Button>
           ) : (
-            <Link href={`/song/${song.uuid}`}>
+            <Link href={`/song?id=${song.uuid}`}>
               <Button variant="ghost" size="icon" className="size-8">
                 <Fullscreen />
               </Button>
