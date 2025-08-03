@@ -7,6 +7,7 @@ import AppSidebar from "@/components/app-sidebar";
 import { SongProvider } from "./context/song-context";
 import { FavoritesProvider } from "./context/favorites-context";
 import { ReactNode } from "react";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Youth Group Songs",
@@ -26,7 +27,10 @@ export default function RootLayout({
             <Navbar />
             <div className="flex flex-1">
               <AppSidebar />
-              <SidebarInset>{children}</SidebarInset>
+              <SidebarInset>
+                <Toaster richColors />
+                {children}
+              </SidebarInset>
             </div>
           </SidebarProvider>
         </MainProvider>
