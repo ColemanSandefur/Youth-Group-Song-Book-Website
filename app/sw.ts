@@ -14,16 +14,28 @@ declare global {
 
 declare const self: ServiceWorkerGlobalScope;
 
-const manifest = self.__SW_MANIFEST;
-
-console.log(manifest);
-
 const serwist = new Serwist({
-  precacheEntries: manifest,
+  precacheEntries: self.__SW_MANIFEST,
   skipWaiting: true,
   clientsClaim: true,
   navigationPreload: true,
   runtimeCaching: defaultCache,
+});
+
+const urlsToCache = ["/", "/song", "/api/songs", "/~offline"] as const;
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    Promise.all(
+      urlsToCache.map((entry) => {
+        const request = serwist.handleRequest({
+          request: new Request(entry),
+          event,
+        });
+        return request;
+      })
+    )
+  );
 });
 
 serwist.addEventListeners();
