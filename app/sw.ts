@@ -1,6 +1,6 @@
 import { defaultCache } from "@serwist/next/worker";
 import type { PrecacheEntry, SerwistGlobalConfig } from "serwist";
-import { ExpirationPlugin, Serwist, StaleWhileRevalidate } from "serwist";
+import { Serwist, StaleWhileRevalidate } from "serwist";
 
 // This declares the value of `injectionPoint` to TypeScript.
 // `injectionPoint` is the string that will be replaced by the
@@ -28,13 +28,6 @@ const serwist = new Serwist({
           ignoreSearch: true,
           ignoreMethod: true,
         },
-        plugins: [
-          new ExpirationPlugin({
-            maxEntries: 4,
-            maxAgeSeconds: 24 * 60 * 60, // 24 Hours
-            maxAgeFrom: "last-used",
-          }),
-        ],
       }),
     },
     {
@@ -45,13 +38,6 @@ const serwist = new Serwist({
           ignoreSearch: true,
           ignoreMethod: true,
         },
-        plugins: [
-          new ExpirationPlugin({
-            maxEntries: 4,
-            maxAgeSeconds: 24 * 60 * 60, // 24 Hours
-            maxAgeFrom: "last-used",
-          }),
-        ],
       }),
     },
     ...defaultCache,
