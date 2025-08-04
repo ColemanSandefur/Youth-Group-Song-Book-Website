@@ -1,6 +1,6 @@
 import { defaultCache } from "@serwist/next/worker";
 import type { PrecacheEntry, SerwistGlobalConfig } from "serwist";
-import { Serwist, StaleWhileRevalidate } from "serwist";
+import { NetworkFirst, Serwist } from "serwist";
 
 // This declares the value of `injectionPoint` to TypeScript.
 // `injectionPoint` is the string that will be replaced by the
@@ -22,7 +22,7 @@ const serwist = new Serwist({
   runtimeCaching: [
     {
       matcher: ({ url }) => url.pathname === "/",
-      handler: new StaleWhileRevalidate({
+      handler: new NetworkFirst({
         cacheName: "song-list",
         matchOptions: {
           ignoreSearch: true,
@@ -32,7 +32,7 @@ const serwist = new Serwist({
     },
     {
       matcher: ({ url }) => url.pathname === "/song",
-      handler: new StaleWhileRevalidate({
+      handler: new NetworkFirst({
         cacheName: "song-name",
         matchOptions: {
           ignoreSearch: true,

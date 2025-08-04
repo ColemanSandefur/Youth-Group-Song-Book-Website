@@ -43,7 +43,7 @@ export default function SongCard({
           )
         )}
       </CardContent>
-      <CardFooter className="flex justify-end">
+      <CardFooter className="">
         <CardAction>
           {isFullscreen ? (
             <Button
