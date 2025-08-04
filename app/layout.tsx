@@ -21,6 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta name="apple-mobile-web-app-title" content="YG Songs" />
+      </head>
       <body className={`antialiased [--header-height:calc(--spacing(14))]`}>
         <MainProvider>
           <SidebarProvider className="flex flex-col">
