@@ -8,6 +8,7 @@ import { SongProvider } from "./context/song-context";
 import { FavoritesProvider } from "./context/favorites-context";
 import { ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
+import InstallPrompt from "@/components/install-prompt";
 
 export const metadata: Metadata = {
   title: "Youth Group Songs",
@@ -33,6 +34,7 @@ export default function RootLayout({
               <SidebarInset>
                 <Toaster richColors />
                 {children}
+                <InstallPrompt />
               </SidebarInset>
             </div>
           </SidebarProvider>
