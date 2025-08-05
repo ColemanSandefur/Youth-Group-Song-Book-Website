@@ -4,6 +4,8 @@ import { SidebarIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { useSidebar } from "./ui/sidebar";
 import FavoritesSheet from "./favorites-sheet";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export function Navbar() {
   const { toggleSidebar } = useSidebar();
@@ -19,17 +21,37 @@ export function Navbar() {
         >
           <SidebarIcon />
         </Button>
-        <Button
-          variant="ghost"
-          className="text-2xl font-bold text-blue-500 hover:text-blue-500"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        >
-          Youth Group Songs
-        </Button>
+        <TitleButton />
         <span className="flex flex-1 justify-end">
           <FavoritesSheet />
         </span>
       </div>
     </header>
+  );
+}
+
+function TitleButton() {
+  const path = usePathname();
+
+  if (path === "/") {
+    return (
+      <Button
+        variant="ghost"
+        className="text-2xl font-bold text-blue-500 hover:text-blue-500"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      >
+        Youth Group Songs
+      </Button>
+    );
+  }
+
+  return (
+    <Button
+      variant="ghost"
+      className="text-2xl font-bold text-blue-500 hover:text-blue-500"
+      asChild
+    >
+      <Link href="/">Youth Group Songs</Link>
+    </Button>
   );
 }
