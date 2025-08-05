@@ -17,6 +17,61 @@ import { Button } from "./ui/button";
 import { Share, SquarePlus } from "lucide-react";
 
 export default function InstallPrompt() {
+  return (
+    <>
+      <InstallIOS />
+      <InstallChrome />
+    </>
+  );
+}
+
+function InstallChrome() {
+  const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null);
+  const [isInstallable, setIsInstallable] = useState(false);
+
+  useEffect(() => {
+    const isIOS =
+      /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setIsInstallable(!isIOS);
+    };
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+    return () =>
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt
+      );
+  }, []);
+
+  useEffect(() => {
+    if (isInstallable) {
+      toast("Install Youth Group Songs", {
+        duration: 10 * 1000, // 10s
+        action: {
+          label: "Install",
+          onClick: async () => {
+            if (deferredPrompt) {
+              (deferredPrompt as any).prompt();
+              const { outcome } = await (deferredPrompt as any).userChoice;
+              setDeferredPrompt(null);
+              setIsInstallable(false);
+              console.log(`User response to the install prompt: ${outcome}`);
+            }
+          },
+        },
+      });
+    }
+  }, [deferredPrompt, isInstallable]);
+
+  return null;
+}
+
+function InstallIOS() {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const isIOS =
@@ -28,7 +83,7 @@ export default function InstallPrompt() {
 
     if (!isStandalone && isIOS) {
       toast("Install Youth Group Songs", {
-        duration: Infinity,
+        duration: 10 * 1000, // 10s
         action: {
           label: "Install",
           onClick: () => setOpen(true),
