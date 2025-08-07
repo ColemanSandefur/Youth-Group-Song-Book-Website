@@ -25,6 +25,25 @@ export default function InstallPrompt() {
   );
 }
 
+function installNotification({
+  onInstall,
+}: {
+  onInstall?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+}) {
+  return toast.info("Install Youth Group Songs", {
+    duration: Infinity,
+    action: {
+      label: "Install",
+      onClick: (e) => {
+        onInstall?.(e);
+      },
+    },
+    description: "Use Youth Group Songs offline!",
+    closeButton: true,
+    icon: null,
+  });
+}
+
 function InstallChrome() {
   const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null);
   const [isInstallable, setIsInstallable] = useState(false);
@@ -50,19 +69,15 @@ function InstallChrome() {
 
   useEffect(() => {
     if (isInstallable) {
-      toast("Install Youth Group Songs", {
-        duration: 10 * 1000, // 10s
-        action: {
-          label: "Install",
-          onClick: async () => {
-            if (deferredPrompt) {
-              (deferredPrompt as any).prompt();
-              const { outcome } = await (deferredPrompt as any).userChoice;
-              setDeferredPrompt(null);
-              setIsInstallable(false);
-              console.log(`User response to the install prompt: ${outcome}`);
-            }
-          },
+      installNotification({
+        onInstall: async () => {
+          if (deferredPrompt) {
+            (deferredPrompt as any).prompt();
+            const { outcome } = await (deferredPrompt as any).userChoice;
+            setDeferredPrompt(null);
+            setIsInstallable(false);
+            console.log(`User response to the install prompt: ${outcome}`);
+          }
         },
       });
     }
@@ -82,12 +97,8 @@ function InstallIOS() {
     ).matches;
 
     if (!isStandalone && isIOS) {
-      toast("Install Youth Group Songs", {
-        duration: 10 * 1000, // 10s
-        action: {
-          label: "Install",
-          onClick: () => setOpen(true),
-        },
+      installNotification({
+        onInstall: () => setOpen(true),
       });
     }
   }, []);
