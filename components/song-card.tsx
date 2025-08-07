@@ -1,7 +1,7 @@
 "use client";
 
 import { Song } from "@/types/songs";
-import { Fullscreen, Heart, Shrink } from "lucide-react";
+import { Expand, Heart, Shrink } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -57,7 +57,7 @@ export default function SongCard({
           ) : (
             <Link href={`/song?id=${song.uuid}`} prefetch>
               <Button variant="ghost" size="icon" className="size-8">
-                <Fullscreen />
+                <Expand />
               </Button>
             </Link>
           )}
