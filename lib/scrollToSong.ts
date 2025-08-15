@@ -1,6 +1,6 @@
 import { Song } from "@/types/songs";
 
-export function scrollToSong(song: Song) {
+export function scrollToSong(song: Song, behavior: ScrollBehavior = "smooth") {
   const element = document.getElementById(song.uuid);
   if (!element) return;
 
@@ -15,5 +15,5 @@ export function scrollToSong(song: Song) {
     navbarOffset -
     gapOffset;
 
-  window.scrollTo({ top: y, behavior: "smooth" });
+  window.scrollTo({ top: y, behavior });
 }

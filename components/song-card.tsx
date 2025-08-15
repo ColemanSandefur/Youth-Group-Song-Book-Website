@@ -12,8 +12,9 @@ import {
   CardAction,
 } from "./ui/card";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useFavorites } from "@/app/context/favorites-context";
+import { motion } from "motion/react";
+import { useEffect, useState } from "react";
 
 export default function SongCard({
   song,
@@ -22,9 +23,6 @@ export default function SongCard({
   song: Song;
   isFullscreen?: boolean;
 }) {
-  const { isFavorite, toggleFavorite } = useFavorites();
-  const router = useRouter();
-
   return (
     <Card id={song.uuid} className="w-full max-w-lg ml-auto mx-auto">
       <CardHeader>
@@ -45,43 +43,65 @@ export default function SongCard({
       </CardContent>
       <CardFooter className="flex justify-end">
         <CardAction>
-          {isFullscreen ? (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="size-8"
-              onClick={() => router.back()}
-            >
-              <Shrink />
-            </Button>
-          ) : (
-            <Link href={`/song?id=${song.uuid}`} prefetch>
-              <Button variant="ghost" size="icon" className="size-8">
-                <Expand />
-              </Button>
-            </Link>
-          )}
-          {isFavorite(song.uuid) ? (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="size-8 text-red-600 hover:text-red-600"
-              onClick={() => toggleFavorite(song.uuid)}
-            >
-              <Heart className="fill-current" />
-            </Button>
-          ) : (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="size-8"
-              onClick={() => toggleFavorite(song.uuid)}
-            >
-              <Heart />
-            </Button>
-          )}
+          <ExpandButton song={song} isFullscreen={isFullscreen} />
+          <FavoriteButton song={song} />
         </CardAction>
       </CardFooter>
     </Card>
+  );
+}
+
+function ExpandButton({
+  song,
+  isFullscreen,
+}: {
+  song: Song;
+  isFullscreen: boolean;
+}) {
+  const href = isFullscreen ? `/?song=${song.uuid}` : `/song?id=${song.uuid}`;
+
+  return (
+    <Link href={href} prefetch>
+      <Button variant="ghost" size="icon" className="size-8">
+        {isFullscreen ? <Shrink /> : <Expand />}
+      </Button>
+    </Link>
+  );
+}
+
+function FavoriteButton({ song }: { song: Song }) {
+  const { isFavorite, toggleFavorite } = useFavorites();
+
+  const [justFavorited, setJustFavorited] = useState(false);
+  const favorited = isFavorite(song.uuid);
+
+  const onClick = () => {
+    if (!favorited) {
+      setJustFavorited(true);
+    }
+    toggleFavorite(song.uuid);
+  };
+
+  useEffect(() => {
+    if (justFavorited) {
+      const timer = setTimeout(() => setJustFavorited(false), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [justFavorited]);
+
+  return (
+    <Button
+      variant="ghost"
+      size="icon"
+      className={`size-8 ${favorited ? "text-red-600 hover:text-red-600" : ""}`}
+      onClick={onClick}
+    >
+      <motion.div
+        animate={justFavorited ? { scale: [1, 1.3, 1] } : { scale: 1 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+      >
+        <Heart className={favorited ? "fill-current" : ""} />
+      </motion.div>
+    </Button>
   );
 }
