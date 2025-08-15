@@ -9,7 +9,12 @@ import {
   useSidebar,
 } from "./ui/sidebar";
 import SongButton from "./song-button";
-import { ArrowDownAZ, ListOrdered, Search } from "lucide-react";
+import {
+  AlertCircleIcon,
+  ArrowDownAZ,
+  ListOrdered,
+  Search,
+} from "lucide-react";
 import { useSongs } from "@/app/context/song-context";
 import { useMemo, useState } from "react";
 import { Song } from "@/types/songs";
@@ -21,6 +26,10 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Label } from "./ui/label";
+import Fuse from "fuse.js";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+
+type FilterMode = "none" | "numerical" | "alphabetical";
 
 export default function AppSidebar({
   ...props
@@ -28,12 +37,30 @@ export default function AppSidebar({
   const { songs } = useSongs();
 
   const [search, setSearch] = useState("");
-  const [sortingMode, setSortingMode] = useState("numerical");
+  const hasSearch = search !== "";
 
-  const filteredSongs = useMemo(
-    () => searchSongs(songs, search),
-    [search, songs]
+  const [sortingMode, setSortingMode] = useState<FilterMode>("numerical");
+
+  const fuse = useMemo(
+    () =>
+      new Fuse(songs, {
+        keys: [
+          { name: "title", weight: 0.7 },
+          { name: "lyrics", weight: 0.3 },
+        ],
+        threshold: 0.3,
+        includeScore: true,
+      }),
+    [songs]
   );
+
+  const filteredSongs = useMemo(() => {
+    if (hasSearch) {
+      return fuse.search(search).map((item) => item.item);
+    } else {
+      return songs;
+    }
+  }, [hasSearch, fuse, search, songs]);
 
   return (
     <Sidebar
@@ -56,7 +83,10 @@ export default function AppSidebar({
           />
           <Search className="pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 opacity-50 select-none" />
         </div>
-        <Select value={sortingMode} onValueChange={setSortingMode}>
+        <Select
+          value={sortingMode}
+          onValueChange={(value) => setSortingMode(value as FilterMode)}
+        >
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Choose a sorting mode" />
           </SelectTrigger>
@@ -74,23 +104,12 @@ export default function AppSidebar({
       </SidebarHeader>
       <SidebarSeparator className="mx-0" />
       <SidebarContent>
-        <SidebarList sortingMode={sortingMode} songs={filteredSongs} />
+        <SidebarList
+          sortingMode={hasSearch ? "none" : sortingMode}
+          songs={filteredSongs}
+        />
       </SidebarContent>
     </Sidebar>
-  );
-}
-
-function searchSongs(songs: Song[], search: string) {
-  const cleanse = (search: string) => {
-    return (search ?? "").toLowerCase().replaceAll(/[^\w\d\s]/g, "");
-  };
-
-  const searchTerm = cleanse(search);
-
-  return songs.filter(
-    (song) =>
-      cleanse(song.title).includes(searchTerm) ||
-      song.number == Number.parseInt(searchTerm)
   );
 }
 
@@ -98,7 +117,7 @@ function SidebarList({
   sortingMode,
   songs,
 }: {
-  sortingMode: string;
+  sortingMode: "none" | "numerical" | "alphabetical";
   songs: Song[];
 }) {
   const { setOpenMobile } = useSidebar();
@@ -109,11 +128,25 @@ function SidebarList({
         return songs.toSorted((a, b) => a.number - b.number);
       case "alphabetical":
         return songs.toSorted((a, b) => a.title.localeCompare(b.title));
+      case "none":
+        return songs;
       default:
         console.warn("Invalid sorting mode: ", sortingMode);
         return songs;
     }
   }, [sortingMode, songs]);
+
+  if (songs.length === 0) {
+    return (
+      <div className="m-2">
+        <Alert>
+          <AlertCircleIcon />
+          <AlertTitle>No songs found</AlertTitle>
+          <AlertDescription>Try another search</AlertDescription>
+        </Alert>
+      </div>
+    );
+  }
 
   return (
     <>
