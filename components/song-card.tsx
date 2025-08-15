@@ -71,16 +71,9 @@ function ExpandButton({
 
 function FavoriteButton({ song }: { song: Song }) {
   const { isFavorite, toggleFavorite } = useFavorites();
-
-  const [justFavorited, setJustFavorited] = useState(false);
   const favorited = isFavorite(song.uuid);
 
-  const onClick = () => {
-    if (!favorited) {
-      setJustFavorited(true);
-    }
-    toggleFavorite(song.uuid);
-  };
+  const [justFavorited, setJustFavorited] = useState(false);
 
   useEffect(() => {
     if (justFavorited) {
@@ -88,6 +81,13 @@ function FavoriteButton({ song }: { song: Song }) {
       return () => clearTimeout(timer);
     }
   }, [justFavorited]);
+
+  const onClick = () => {
+    if (!favorited) {
+      setJustFavorited(true);
+    }
+    toggleFavorite(song.uuid);
+  };
 
   return (
     <Button
@@ -97,7 +97,14 @@ function FavoriteButton({ song }: { song: Song }) {
       onClick={onClick}
     >
       <motion.div
-        animate={justFavorited ? { scale: [1, 1.3, 1] } : { scale: 1 }}
+        animate={justFavorited ? "favorited" : "normal"}
+        variants={{
+          favorited: {
+            scale: [1, 1.2, 1],
+            rotate: [0, 5, 0, -5, 0, 5, 0],
+          },
+          normal: {},
+        }}
         transition={{ duration: 0.3, ease: "easeOut" }}
       >
         <Heart className={favorited ? "fill-current" : ""} />
