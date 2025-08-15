@@ -32,7 +32,13 @@ function ScrollToSong() {
     const songId = params.get("song");
     const song = songs.find(({ uuid }) => uuid == songId);
     if (song) {
-      scrollToSong(song);
+      scrollToSong(song, "instant");
+
+      // Remove the song parameter on load
+      const newParams = new URLSearchParams(params);
+      newParams.delete("song");
+      const newUrl = `${window.location.pathname}?${newParams.toString()}`;
+      router.replace(newUrl, { scroll: false }); // shallow route change
     }
   }, [songs, params, router]);
 
