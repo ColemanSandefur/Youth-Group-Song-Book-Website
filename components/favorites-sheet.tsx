@@ -1,6 +1,6 @@
 "use client";
 
-import { Heart } from "lucide-react";
+import { Heart, X } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   Sheet,
@@ -24,15 +24,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
+import { AnimatePresence, motion } from "motion/react";
 
 export default function FavoritesSheet() {
-  const { favorites } = useFavorites();
+  const { favorites, toggleFavorite } = useFavorites();
   const { songs } = useSongs();
 
   const [open, setOpen] = useState(false);
 
   const favoriteSongs = songs.filter((song) => favorites.includes(song.uuid));
-  // const favoriteSongs = songs;
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -41,31 +41,58 @@ export default function FavoritesSheet() {
           <Heart />
         </Button>
       </SheetTrigger>
-      <SheetContent className="gap-0">
+      <SheetContent className="flex flex-col h-full gap-0">
         <SheetHeader>
           <SheetTitle>Favorites</SheetTitle>
         </SheetHeader>
         <Separator />
-        <div className="overflow-y-auto flex flex-col gap-2">
+        <motion.div
+          layout
+          className="flex-1 overflow-y-auto overflow-x-hidden p-2 flex flex-col gap-2"
+        >
           {favoriteSongs.length > 0 ? (
-            favoriteSongs.map((song) => (
-              <SongButton
-                key={song.uuid}
-                song={song}
-                onClick={() => setOpen(false)}
-              />
-            ))
+            <AnimatePresence>
+              {favoriteSongs.map((song) => (
+                <motion.div
+                  layout
+                  key={song.uuid}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.1 }}
+                  className="flex flex-row items-center"
+                >
+                  <span className="grow">
+                    <SongButton song={song} onClick={() => setOpen(false)} />
+                  </span>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="mr-2"
+                    onClick={() => toggleFavorite(song.uuid)}
+                  >
+                    <X className="text-muted-foreground" />
+                  </Button>
+                </motion.div>
+              ))}
+            </AnimatePresence>
           ) : (
-            <>
-              <p className="px-4 pt-4">Your favorite songs will appear here.</p>
-              <p className="px-4">
+            <motion.div
+              layout
+              initial={{ scale: 0.9, x: -20 }}
+              animate={{ scale: 1.0, x: 0 }}
+              className="px-4 pt-4"
+            >
+              <p>Your favorite songs will appear here.</p>
+              <p>
                 Click the <Heart className="inline-block size-4" /> to favorite
                 a song!
               </p>
-            </>
+            </motion.div>
           )}
-        </div>
-        <SheetFooter>
+        </motion.div>
+        <Separator />
+        <SheetFooter className="mt-auto">
           <ClearFavoritesButton onConfirm={() => setOpen(false)} />
         </SheetFooter>
       </SheetContent>
@@ -74,7 +101,7 @@ export default function FavoritesSheet() {
 }
 
 function ClearFavoritesButton({ onConfirm }: { onConfirm?: () => void }) {
-  const { clearFavorites } = useFavorites();
+  const { favorites, clearFavorites } = useFavorites();
   const [open, setOpen] = useState(false);
 
   const closeDialog = () => setOpen(false);
@@ -82,7 +109,7 @@ function ClearFavoritesButton({ onConfirm }: { onConfirm?: () => void }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Clear</Button>
+        <Button disabled={favorites.length === 0}>Clear</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

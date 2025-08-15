@@ -28,6 +28,7 @@ import {
 import { Label } from "./ui/label";
 import Fuse from "fuse.js";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import { motion } from "motion/react";
 
 type FilterMode = "none" | "numerical" | "alphabetical";
 
@@ -138,13 +139,13 @@ function SidebarList({
 
   if (songs.length === 0) {
     return (
-      <div className="m-2">
+      <motion.div className="m-2" initial={{ scale: 0 }} animate={{ scale: 1 }}>
         <Alert>
           <AlertCircleIcon />
           <AlertTitle>No songs found</AlertTitle>
           <AlertDescription>Try another search</AlertDescription>
         </Alert>
-      </div>
+      </motion.div>
     );
   }
 
