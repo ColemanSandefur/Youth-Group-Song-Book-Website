@@ -14,6 +14,7 @@ import {
   ArrowDownAZ,
   ListOrdered,
   Search,
+  X,
 } from "lucide-react";
 import { useSongs } from "@/app/context/song-context";
 import { useMemo, useState } from "react";
@@ -28,7 +29,8 @@ import {
 import { Label } from "./ui/label";
 import Fuse from "fuse.js";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
-import { motion } from "motion/react";
+import { AnimatePresence, motion, ValueTransition } from "motion/react";
+import { Button } from "./ui/button";
 
 type FilterMode = "none" | "numerical" | "alphabetical";
 
@@ -63,27 +65,64 @@ export default function AppSidebar({
     }
   }, [hasSearch, fuse, search, songs]);
 
+  const searchTransition: ValueTransition = {
+    duration: 0.15,
+    ease: "easeInOut",
+  };
+
   return (
     <Sidebar
       className="top-(--header-height) h-[calc(100svh-var(--header-height))]!"
       {...props}
     >
       <SidebarHeader>
-        <div className="relative">
-          <Label htmlFor="search" className="sr-only">
-            Search
-          </Label>
-          <SidebarInput
-            id="search"
-            placeholder="Type to search..."
-            className="h-8 pl-7"
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-            }}
-          />
-          <Search className="pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 opacity-50 select-none" />
-        </div>
+        <motion.div
+          layout
+          className="flex flex-row items-center gap-2"
+          transition={{ layout: searchTransition }}
+        >
+          <motion.div
+            layout
+            className="relative grow"
+            transition={searchTransition}
+          >
+            <Label htmlFor="search" className="sr-only">
+              Search
+            </Label>
+            <SidebarInput
+              id="search"
+              placeholder="Type to search..."
+              className="h-8 pl-7"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <Search className="pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 opacity-50 select-none" />
+          </motion.div>
+          <AnimatePresence initial={false} mode="popLayout">
+            {hasSearch && (
+              <motion.div
+                layout
+                variants={{
+                  hidden: { scaleX: 0, originX: 1, opacity: 0 },
+                  visible: { scaleX: 1, originX: 1, opacity: 1 },
+                }}
+                initial={"hidden"}
+                animate={"visible"}
+                exit={"hidden"}
+                transition={searchTransition}
+              >
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="size-8"
+                  onClick={() => setSearch("")}
+                >
+                  <X />
+                </Button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
         <Select
           value={sortingMode}
           onValueChange={(value) => setSortingMode(value as FilterMode)}
