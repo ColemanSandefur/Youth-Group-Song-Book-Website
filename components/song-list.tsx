@@ -38,7 +38,7 @@ function ScrollToSong() {
       const newParams = new URLSearchParams(params);
       newParams.delete("song");
       const newUrl = `${window.location.pathname}?${newParams.toString()}`;
-      router.replace(newUrl, { scroll: false }); // shallow route change
+      window.history.replaceState({}, "", newUrl);
     }
   }, [songs, params, router]);
 
