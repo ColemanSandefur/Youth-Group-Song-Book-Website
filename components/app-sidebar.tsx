@@ -48,6 +48,7 @@ export default function AppSidebar({
     () =>
       new Fuse(songs, {
         keys: [
+          { name: "number", weight: 1 },
           { name: "title", weight: 0.7 },
           { name: "lyrics", weight: 0.3 },
         ],
